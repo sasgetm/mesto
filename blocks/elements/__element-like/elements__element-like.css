@@ -6,6 +6,8 @@
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
+  border: 0;
+  background-color: none;
 }
 
 .elements__element-like:hover {

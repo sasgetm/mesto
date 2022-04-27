@@ -1,6 +1,6 @@
 .header__container {
   padding: 45px 0 40px;
-  border-bottom: 1px solid #3B3B3B;
+  border-bottom: 1px solid rgba(84, 84, 84, .7);
   display: flex;
 }
 

@@ -4,6 +4,7 @@
   background: url(../../../images/profile__add-button.svg) center center no-repeat;
   background-size: 22px;
   border: 2px solid #fff;
+  box-sizing: border-box;
   border-radius: 2px;
   cursor: pointer;
   transition: .2s;

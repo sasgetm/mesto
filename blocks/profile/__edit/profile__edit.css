@@ -4,6 +4,7 @@
   background: url(../../../images/profile__edit.svg) center center no-repeat;
   background-size: 10px;
   border: 1px solid #fff;
+  box-sizing: border-box;
   cursor: pointer;
   transition: .2s;
 }

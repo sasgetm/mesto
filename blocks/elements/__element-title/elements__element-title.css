@@ -1,4 +1,5 @@
 .elements__element-title {
+  margin: 0;
   width: calc(100% - 37px);
   color: #000;
   font-weight: 900;
