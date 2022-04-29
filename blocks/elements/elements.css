@@ -5,7 +5,7 @@
   padding: 25px 0 33px;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 920px) {
   .elements {
     grid-template-columns: repeat(2, 1fr);
   }
