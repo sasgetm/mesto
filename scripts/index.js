@@ -3,8 +3,8 @@ let profileEdit = document.querySelector('.profile__edit');
 let popupClose = document.querySelector('.popup__close');
 let nameElement = document.querySelector('.profile__name');
 let roleElement = document.querySelector('.profile__role');
-let nameInput = document.querySelector('.popup__input_name');
-let roleInput = document.querySelector('.popup__input_role');
+let nameInput = document.querySelector('.popup__input_type_name');
+let roleInput = document.querySelector('.popup__input_type_role');
 let formElement = document.querySelector('.popup__form');
 
 function showPopup() {
