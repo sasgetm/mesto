@@ -5,7 +5,10 @@
   height: 100vh;
   top: 0;
   left: 0;
-  display: none;
+  display: flex;
+  visibility: hidden;
+  transition: visibility .25s, opacity .25s linear;
   opacity: 0;
+  z-index: 1;
 }
 
