@@ -22,10 +22,10 @@
         </div>
         <div class="profile__info">
           <div class="profile__info-top">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name">Жак-Ив Кустов</h1>
             <button type="button" class="profile__edit"></button>
           </div>
-          <p class="profile__role">Исследователь океана</p>
+          <p class="profile__role">Исследователь океанов</p>
         </div>
       </div>
       <button type="button" class="profile__add-button"></button>
@@ -34,20 +34,12 @@
       <template class="elements__template">
         <div class="elements__element">
           <div class="elements__element-image-container">
-            <img class="elements__element-image js-element-image">
+            <img class="elements__element-image">
           </div>
           <button type="button" class="elements__element-basket"></button>
           <div class="elements__element-bottom">
-            <h2 class="elements__element-title js-element-title"></h2>
+            <h2 class="elements__element-title"></h2>
             <button type="button" class="elements__element-like"></button>
-          </div>
-
-          <div class="popup popup_dark js-image-popup elements__element-popup">
-            <div class="elements__element-popup-container">
-              <button type="button" class="popup__close"></button>
-              <img class="elements__element-popup-image js-element-image">
-              <p class="elements__element-popup-title js-element-title"></p>
-            </div>
           </div>
         </div>
       </template>
@@ -62,7 +54,7 @@
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form name="edit-form" class="popup__form js-profile-form">
+      <form name="profile-form" class="popup__form">
         <input type="text" class="popup__input popup__input_type_name">
         <input type="text" class="popup__input popup__input_type_role">
         <button type="submit" class="popup__button">Сохранить</button>
@@ -73,11 +65,18 @@
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <h2 class="popup__title">Новое место</h2>
-      <form name="place-form" class="popup__form js-place-form">
+      <form name="place-form" class="popup__form">
         <input type="text" class="popup__input popup__input_place_name" placeholder="Название">
         <input type="text" class="popup__input popup__input_place_link" placeholder="Ссылка на картинку">
         <button type="submit" class="popup__button">Создать</button>
       </form>
+    </div>
+  </div>
+  <div class="popup popup_dark image-popup js-image-popup">
+    <div class="image-popup__container">
+      <button type="button" class="popup__close"></button>
+      <img class="image-popup__image">
+      <p class="image-popup__title"></p>
     </div>
   </div>
 

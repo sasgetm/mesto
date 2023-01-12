@@ -1,104 +1,123 @@
 // edit profile
 
-let nameElement = document.querySelector('.profile__name');
-let roleElement = document.querySelector('.profile__role');
-let profileEdit = document.querySelector('.profile__edit');
-let profilePopup = document.querySelector('.js-profile-popup');
-let profileForm = document.querySelector('.js-profile-form');
-let nameInput = document.querySelector('.popup__input_type_name');
-let roleInput = document.querySelector('.popup__input_type_role');
+const profileNameElement = document.querySelector('.profile__name');
+const profileRoleElement = document.querySelector('.profile__role');
+const profileEditButton = document.querySelector('.profile__edit');
+const profilePopup = document.querySelector('.js-profile-popup');
+const profileForm = document.forms['profile-form'];
+const profileNameInput = document.querySelector('.popup__input_type_name');
+const profileRoleInput = document.querySelector('.popup__input_type_role');
 
-function showProfilePopup() {
-  let name = nameElement.textContent;
-  let role = roleElement.textContent;
-  nameInput.value = name;
-  roleInput.value = role;
-  profilePopup.classList.add('popup_opened');
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
 
-profileEdit.addEventListener('click', showProfilePopup);
+function showProfilePopup() {
+  const name = profileNameElement.textContent;
+  const role = profileRoleElement.textContent;
+  profileNameInput.value = name;
+  profileRoleInput.value = role;
+  openPopup(profilePopup);
+}
 
-function submitHandlerForm (evt) {
+profileEditButton.addEventListener('click', showProfilePopup);
+
+function handleProfileForm (evt) {
   evt.preventDefault();
-  let editedName = nameInput.value;
-  let editedRole = roleInput.value;
-  nameElement.textContent = editedName;
-  roleElement.textContent = editedRole;
+  const editedName = profileNameInput.value;
+  const editedRole = profileRoleInput.value;
+  profileNameElement.textContent = editedName;
+  profileRoleElement.textContent = editedRole;
   closePopup();
 }
 
-profileForm.addEventListener('submit', submitHandlerForm);
+profileForm.addEventListener('submit', handleProfileForm);
 
 
 // close popup
 
-let popup = document.querySelectorAll('.popup');
-let popupClose = document.querySelectorAll('.popup__close');
+const popups = document.querySelectorAll('.popup');
+const popupCloseElements = document.querySelectorAll('.popup__close');
 
 function closePopup() {
-  for (let popupElem of popup) {
-    popupElem.classList.remove('popup_opened');
+  for (const popup of popups) {
+    popup.classList.remove('popup_opened');
   }
 }
 
-for (let closeElem of popupClose) {
-  closeElem.addEventListener('click', closePopup);
+for (const popupCloseElement of popupCloseElements) {
+  popupCloseElement.addEventListener('click', closePopup);
 }
 
 
 // render places
 
-let initialCards = [
+const initialCards = [
   {
     name: 'Карачаевск',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-    liked: false,
   },
   {
     name: 'Челябинская область',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-    liked: false,
   },
   {
     name: 'Иваново',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-    liked: false,
   },
   {
     name: 'Камчатка',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-    liked: false,
   },
   {
     name: 'Холмогорский район',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-    liked: false,
   },
   {
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-    liked: false,
   }
 ];
 
-let elements = document.querySelector('.elements');
-let elementsTemplate = document.querySelector('.elements__template').content;
+const elementsContainer = document.querySelector('.elements');
+const elementsTemplate = document.querySelector('.elements__template').content;
 
-function createElement(name, link, liked) {
-  let elementsElement = elementsTemplate.querySelector('.elements__element').cloneNode(true);
-  elementsElement.querySelectorAll('.js-element-image').forEach((item) => item.src = link);
-  elementsElement.querySelectorAll('.js-element-image').forEach((item) => item.alt = name);
-  elementsElement.querySelectorAll('.js-element-title').forEach((item) => item.textContent = name);
-  elements.append(elementsElement);
-  if (liked) elementsElement.querySelector('.elements__element-like').classList.add('elements__element-like_active');
+function getCard(name, link) {
+  const cardElement = elementsTemplate.querySelector('.elements__element').cloneNode(true);
+
+  const elementImage = cardElement.querySelector('.elements__element-image');
+  elementImage.src = link;
+  elementImage.alt = name;
+
+  const elementTitle = cardElement.querySelector('.elements__element-title');
+  elementTitle.textContent = name;
+
+  const elementLikeButton = cardElement.querySelector('.elements__element-like');
+
+  elementLikeButton.addEventListener('click', () => switchLike(elementLikeButton));
+
+  const elementBasketButton = cardElement.querySelector('.elements__element-basket');
+
+  elementBasketButton.addEventListener('click', () => removeCard(elementBasketButton));
+
+  elementImage.addEventListener('click', () => showImage(elementImage));
+
+  return cardElement;
+}
+
+function appendCard(name, link) {
+  const elementsElement = getCard(name, link);
+  elementsContainer.append(elementsElement);
+}
+
+function prependElement(name, link) {
+  const elementsElement = getCard(name, link);
+  elementsContainer.prepend(elementsElement);
 }
 
 function showCards () {
-  while (elements.firstChild) {
-    elements.removeChild(elements.firstChild);
-  }
   initialCards.forEach(function (item) {
-    createElement(item.name, item.link, item.liked);
+    appendCard(item.name, item.link);
   });
 }
 
@@ -107,93 +126,61 @@ showCards();
 
 // add place
 
-let placeAdd = document.querySelector('.profile__add-button');
-let placePopup = document.querySelector('.js-place-popup');
-let placeForm = document.querySelector('.js-place-form');
-let placeNameInput = document.querySelector('.popup__input_place_name');
-let placeLinkInput = document.querySelector('.popup__input_place_link');
+const placeAddButton = document.querySelector('.profile__add-button');
+const placePopup = document.querySelector('.js-place-popup');
+const placeForm = document.forms['place-form'];
+const placeNameInput = document.querySelector('.popup__input_place_name');
+const placeLinkInput = document.querySelector('.popup__input_place_link');
 
-function showPlacePopup() {
-  placePopup.classList.add('popup_opened');
-}
+placeAddButton.addEventListener('click', () => openPopup(placePopup));
 
-placeAdd.addEventListener('click', showPlacePopup);
-
-function submitPlaceForm (evt) {
+function handlePlaceForm (evt) {
   evt.preventDefault();
 
-  let placeName = placeNameInput.value;
-  let placeLink = placeLinkInput.value;
+  const placeName = placeNameInput.value;
+  const placeLink = placeLinkInput.value;
 
   if (placeName && placeLink) {
-    placeNameInput.value = '';
-    placeLinkInput.value = '';
-
-    initialCards.unshift({name: placeName, link: placeLink});
-
-    showCards();
+    evt.target.reset();
+    prependElement(placeName, placeLink);
     closePopup();
   }
 }
 
-placeForm.addEventListener('submit', submitPlaceForm);
+placeForm.addEventListener('submit', handlePlaceForm);
 
 
-// like/remove place, show image
+// like/remove place
 
-function findClickedElement(clickedElement) {
-  let element = clickedElement.closest('.elements__element');
+function findClickedCard(clickedElement) {
+  const element = clickedElement.closest('.elements__element');
   return element;
 }
 
-function findIndexOfClicked(clickedElement) {
-  let element = findClickedElement(clickedElement);
-  let name = element.querySelector('.js-element-title').textContent;
-  let index = initialCards.findIndex(n => n.name === name);
-  return index;
-}
-
 function switchLike(likeElem) {
-  let index = findIndexOfClicked(likeElem);
-
-  let liked = initialCards[index].liked;
-  initialCards[index].liked = !liked;
-
-  showCards();
+  likeElem.classList.toggle('elements__element-like_active');
 }
 
-function removeElement(basketElem) {
-  let index = findIndexOfClicked(basketElem);
-  initialCards.splice(index, 1);
-
-  showCards();
+function removeCard(basketElem) {
+  const card = findClickedCard(basketElem);
+  elementsContainer.removeChild(card);
 }
+
+
+// show image
+
+const imagePopup = document.querySelector('.image-popup');
+const imagePopupImg = document.querySelector('.image-popup__image');
+const imagePopupTitle = document.querySelector('.image-popup__title')
 
 function showImage(imageElement) {
-  let element = findClickedElement(imageElement);
-  let imagePopup = element.querySelector('.js-image-popup');
-  imagePopup.classList.add('popup_opened');
-}
+  const imgSrc = imageElement.src;
+  const imgName = imageElement.alt;
+  console.log(imgSrc, imgName)
 
-function closeImage(popupClose) {
-  let element = findClickedElement(popupClose);
-  let imagePopup = element.querySelector('.js-image-popup');
-  imagePopup.classList.remove('popup_opened');
-}
+  imagePopupImg.src = imgSrc;
+  imagePopupImg.alt = imgName;
+  imagePopupTitle.textContent = imgName;
 
-function findClicked(clickedElement) {
-  if (clickedElement.classList.contains('elements__element-like')) {
-    switchLike(clickedElement);
-  }
-  if (clickedElement.classList.contains('elements__element-basket')) {
-    removeElement(clickedElement);
-  }
-  if (clickedElement.classList.contains('elements__element-image')) {
-    showImage(clickedElement);
-  }
-  if (clickedElement.classList.contains('popup__close')) {
-    closeImage(clickedElement);
-  }
+  openPopup(imagePopup);
 }
-
-elements.addEventListener('click', (el) => findClicked(el.target));
