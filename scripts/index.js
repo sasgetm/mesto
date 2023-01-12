@@ -176,7 +176,6 @@ const imagePopupTitle = document.querySelector('.image-popup__title')
 function showImage(imageElement) {
   const imgSrc = imageElement.src;
   const imgName = imageElement.alt;
-  console.log(imgSrc, imgName)
 
   imagePopupImg.src = imgSrc;
   imagePopupImg.alt = imgName;
