@@ -63,7 +63,6 @@ for (const popupContainer of popupContainers) {
 }
 
 const escapeListener = function (evt) {
-  console.log(evt.key);
   if (evt.key === 'Escape') closePopup();
 };
 
