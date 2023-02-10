@@ -10,6 +10,7 @@ const profileRoleInput = document.querySelector('.popup__input_type_role');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  addEscapeListener ();
 }
 
 function showProfilePopup() {
@@ -38,15 +39,40 @@ profileForm.addEventListener('submit', handleProfileForm);
 
 const popups = document.querySelectorAll('.popup');
 const popupCloseElements = document.querySelectorAll('.popup__close');
+const popupContainers = document.querySelectorAll('.popup__container');
 
 function closePopup() {
   for (const popup of popups) {
     popup.classList.remove('popup_opened');
   }
+  removeEscapeListener ();
 }
 
 for (const popupCloseElement of popupCloseElements) {
   popupCloseElement.addEventListener('click', closePopup);
+}
+
+for (const popup of popups) {
+  popup.addEventListener('click', closePopup);
+}
+
+for (const popupContainer of popupContainers) {
+  popupContainer.addEventListener('click', (evt) => {
+    evt.stopPropagation();
+  });
+}
+
+const escapeListener = function (evt) {
+  console.log(evt.key);
+  if (evt.key === 'Escape') closePopup();
+};
+
+function addEscapeListener () {
+  document.addEventListener('keyup', escapeListener)
+}
+
+function removeEscapeListener () {
+  document.removeEventListener('keyup', escapeListener)
 }
 
 
