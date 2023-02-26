@@ -5,6 +5,6 @@
   cursor: initial;
 }
 
-.popup__button:hover {
+.popup__button_inactive:hover {
   opacity: initial;
 }
