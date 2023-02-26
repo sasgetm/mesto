@@ -10,7 +10,7 @@ const profileRoleInput = document.querySelector('.popup__input_type_role');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  addEscapeListener ();
+  document.addEventListener('keyup', (evt) => escapeListener(evt, popup))
 }
 
 function showProfilePopup() {
@@ -29,7 +29,7 @@ function handleProfileForm (evt) {
   const editedRole = profileRoleInput.value;
   profileNameElement.textContent = editedName;
   profileRoleElement.textContent = editedRole;
-  closePopup();
+  closePopup(profilePopup);
 }
 
 profileForm.addEventListener('submit', handleProfileForm);
@@ -41,38 +41,27 @@ const popups = document.querySelectorAll('.popup');
 const popupCloseElements = document.querySelectorAll('.popup__close');
 const popupContainers = document.querySelectorAll('.popup__container');
 
-function closePopup() {
-  for (const popup of popups) {
-    popup.classList.remove('popup_opened');
-  }
-  removeEscapeListener ();
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keyup', (evt) => escapeListener(evt, popup));
 }
 
 for (const popupCloseElement of popupCloseElements) {
-  popupCloseElement.addEventListener('click', closePopup);
+  const popup = popupCloseElement.closest('.popup');
+  popupCloseElement.addEventListener('click', () => closePopup(popup));
 }
 
 for (const popup of popups) {
-  popup.addEventListener('click', closePopup);
-}
-
-for (const popupContainer of popupContainers) {
-  popupContainer.addEventListener('click', (evt) => {
-    evt.stopPropagation();
-  });
-}
-
-const escapeListener = function (evt) {
-  if (evt.key === 'Escape') closePopup();
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup')) {
+       closePopup(popup)
+    }
+  })
 };
 
-function addEscapeListener () {
-  document.addEventListener('keyup', escapeListener)
-}
-
-function removeEscapeListener () {
-  document.removeEventListener('keyup', escapeListener)
-}
+const escapeListener = (evt, popup) => {
+  if (evt.key === 'Escape') closePopup(popup);
+};
 
 
 // render places
@@ -125,7 +114,7 @@ function getCard(name, link) {
 
   elementBasketButton.addEventListener('click', () => removeCard(elementBasketButton));
 
-  elementImage.addEventListener('click', () => showImage(elementImage));
+  elementImage.addEventListener('click', () => showImage(name, link));
 
   return cardElement;
 }
@@ -165,11 +154,9 @@ function handlePlaceForm (evt) {
   const placeName = placeNameInput.value;
   const placeLink = placeLinkInput.value;
 
-  if (placeName && placeLink) {
-    evt.target.reset();
-    prependElement(placeName, placeLink);
-    closePopup();
-  }
+  evt.target.reset();
+  prependElement(placeName, placeLink);
+  closePopup(placePopup);
 }
 
 placeForm.addEventListener('submit', handlePlaceForm);
@@ -177,18 +164,13 @@ placeForm.addEventListener('submit', handlePlaceForm);
 
 // like/remove place
 
-function findClickedCard(clickedElement) {
-  const element = clickedElement.closest('.elements__element');
-  return element;
-}
-
 function switchLike(likeElem) {
   likeElem.classList.toggle('elements__element-like_active');
 }
 
 function removeCard(basketElem) {
-  const card = findClickedCard(basketElem);
-  elementsContainer.removeChild(card);
+  const card = basketElem.closest('.elements__element');
+  card.remove();
 }
 
 
@@ -198,13 +180,10 @@ const imagePopup = document.querySelector('.image-popup');
 const imagePopupImg = document.querySelector('.image-popup__image');
 const imagePopupTitle = document.querySelector('.image-popup__title')
 
-function showImage(imageElement) {
-  const imgSrc = imageElement.src;
-  const imgName = imageElement.alt;
-
-  imagePopupImg.src = imgSrc;
-  imagePopupImg.alt = imgName;
-  imagePopupTitle.textContent = imgName;
+function showImage(name, link) {
+  imagePopupImg.src = link;
+  imagePopupImg.alt = name;
+  imagePopupTitle.textContent = name;
 
   openPopup(imagePopup);
 }
