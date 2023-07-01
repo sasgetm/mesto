@@ -10,7 +10,7 @@ const profileRoleInput = document.querySelector('.popup__input_type_role');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keyup', (evt) => escapeListener(evt, popup))
+  document.addEventListener('keyup', closeByEsc);
 }
 
 function showProfilePopup() {
@@ -43,7 +43,7 @@ const popupContainers = document.querySelectorAll('.popup__container');
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  document.removeEventListener('keyup', (evt) => escapeListener(evt, popup));
+  document.removeEventListener('keyup', closeByEsc);
 }
 
 for (const popupCloseElement of popupCloseElements) {
@@ -54,7 +54,7 @@ for (const popupCloseElement of popupCloseElements) {
 for (const popup of popups) {
   popup.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup')) {
-       closePopup(popup)
+       closePopup(popup);
     }
   })
 };
@@ -63,8 +63,17 @@ const escapeListener = (evt, popup) => {
   if (evt.key === 'Escape') closePopup(popup);
 };
 
+function closeByEsc(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup); 
+  }
+}
+
 
 // render places
+
+import { Card } from './Card.js';
 
 const initialCards = [
   {
@@ -93,45 +102,24 @@ const initialCards = [
   }
 ];
 
-const elementsContainer = document.querySelector('.elements');
 const elementsTemplate = document.querySelector('.elements__template').content;
+const elementsContainer = document.querySelector('.elements');
 
-function getCard(name, link) {
-  const cardElement = elementsTemplate.querySelector('.elements__element').cloneNode(true);
-
-  const elementImage = cardElement.querySelector('.elements__element-image');
-  elementImage.src = link;
-  elementImage.alt = name;
-
-  const elementTitle = cardElement.querySelector('.elements__element-title');
-  elementTitle.textContent = name;
-
-  const elementLikeButton = cardElement.querySelector('.elements__element-like');
-
-  elementLikeButton.addEventListener('click', () => switchLike(elementLikeButton));
-
-  const elementBasketButton = cardElement.querySelector('.elements__element-basket');
-
-  elementBasketButton.addEventListener('click', () => removeCard(elementBasketButton));
-
-  elementImage.addEventListener('click', () => showImage(name, link));
-
-  return cardElement;
-}
-
-function appendCard(name, link) {
-  const elementsElement = getCard(name, link);
+function appendCard(item) {
+  const card = new Card(item, elementsTemplate);
+  const elementsElement = card.getCard();
   elementsContainer.append(elementsElement);
 }
 
-function prependElement(name, link) {
-  const elementsElement = getCard(name, link);
+function prependElement(item) {
+  const card = new Card(item, elementsTemplate);
+  const elementsElement = card.getCard();
   elementsContainer.prepend(elementsElement);
 }
 
 function showCards () {
   initialCards.forEach(function (item) {
-    appendCard(item.name, item.link);
+    appendCard(item);
   });
 }
 
@@ -155,23 +143,11 @@ function handlePlaceForm (evt) {
   const placeLink = placeLinkInput.value;
 
   evt.target.reset();
-  prependElement(placeName, placeLink);
+  prependElement({name:placeName, link:placeLink});
   closePopup(placePopup);
 }
 
 placeForm.addEventListener('submit', handlePlaceForm);
-
-
-// like/remove place
-
-function switchLike(likeElem) {
-  likeElem.classList.toggle('elements__element-like_active');
-}
-
-function removeCard(basketElem) {
-  const card = basketElem.closest('.elements__element');
-  card.remove();
-}
 
 
 // show image
@@ -187,3 +163,26 @@ function showImage(name, link) {
 
   openPopup(imagePopup);
 }
+
+
+// forms validaton
+
+import { FormValidator } from './FormValidator.js';
+
+const enableAllFormsValidation = (options) => {
+  const formList = Array.from(document.querySelectorAll(options.formSelector));
+
+  formList.forEach((formElement) => {
+    const formValidator = new FormValidator(options, formElement);
+    formValidator.enableValidation();
+  })
+};
+
+enableAllFormsValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active',
+});
