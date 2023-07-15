@@ -39,7 +39,6 @@ profileForm.addEventListener('submit', handleProfileForm);
 
 const popups = document.querySelectorAll('.popup');
 const popupCloseElements = document.querySelectorAll('.popup__close');
-const popupContainers = document.querySelectorAll('.popup__container');
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
@@ -57,10 +56,6 @@ for (const popup of popups) {
        closePopup(popup);
     }
   })
-};
-
-const escapeListener = (evt, popup) => {
-  if (evt.key === 'Escape') closePopup(popup);
 };
 
 function closeByEsc(evt) {
@@ -105,16 +100,20 @@ const initialCards = [
 const elementsTemplate = document.querySelector('.elements__template').content;
 const elementsContainer = document.querySelector('.elements');
 
-function appendCard(item) {
-  const card = new Card(item, elementsTemplate);
+function createCard(item) {
+  const card = new Card(item, elementsTemplate, showImage);
   const elementsElement = card.getCard();
-  elementsContainer.append(elementsElement);
+  return elementsElement;
+}
+
+function appendCard(item) {
+  const cardForAppend = createCard(item);
+  elementsContainer.append(cardForAppend);
 }
 
 function prependElement(item) {
-  const card = new Card(item, elementsTemplate);
-  const elementsElement = card.getCard();
-  elementsContainer.prepend(elementsElement);
+  const cardForPrepend = createCard(item);
+  elementsContainer.prepend(cardForPrepend);
 }
 
 function showCards () {

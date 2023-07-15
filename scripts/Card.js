@@ -1,42 +1,35 @@
 class Card {
-  constructor(data, selector) {
+  constructor(data, selector, showImage) {
     this._name = data.name;
     this._link = data.link;
     this._selector = selector;
+    this._showImage = showImage;
+    this._cardElement = this._selector.querySelector('.elements__element').cloneNode(true);
+    this._elementImage = this._cardElement.querySelector('.elements__element-image');
+    this._elementTitle = this._cardElement.querySelector('.elements__element-title');
+    this._elementLikeButton = this._cardElement.querySelector('.elements__element-like');
+    this._elementBasketButton = this._cardElement.querySelector('.elements__element-basket');
   }
   
   getCard() {
-    const _cardElement = this._selector.querySelector('.elements__element').cloneNode(true);
-
-    const _elementImage = _cardElement.querySelector('.elements__element-image');
-    _elementImage.src = this._link;
-    _elementImage.alt = this._name;
-
-    const _elementTitle = _cardElement.querySelector('.elements__element-title');
-    _elementTitle.textContent = this._name;
-
-    const _elementLikeButton = _cardElement.querySelector('.elements__element-like');
-
-    _elementLikeButton.addEventListener('click', () => this._switchLike(_elementLikeButton));
-
-    const _elementBasketButton = _cardElement.querySelector('.elements__element-basket');
-
-    _elementBasketButton.addEventListener('click', () => this._removeCard(_elementBasketButton));
-
-    _elementImage.addEventListener('click', () => showImage(this._name, this._link));
-
-    return _cardElement;
+    this._elementImage.src = this._link;
+    this._elementImage.alt = this._name;
+    this._elementTitle.textContent = this._name;
+    this._elementLikeButton.addEventListener('click', () => this._switchLike());
+    this._elementBasketButton.addEventListener('click', () => this._removeCard());
+    this._elementImage.addEventListener('click', () => this._showImage(this._name, this._link));
+    return this._cardElement;
   }
 
   // like/remove place
 
-  _switchLike(likeElem) {
-    likeElem.classList.toggle('elements__element-like_active');
+  _switchLike() {
+    this._elementLikeButton.classList.toggle('elements__element-like_active');
   }
 
-  _removeCard(basketElem) {
-    const card = basketElem.closest('.elements__element');
-    card.remove();
+  _removeCard() {
+    this._cardElement.remove();
+    this._cardElement = null;
   }
 }
 
