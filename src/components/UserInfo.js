@@ -7,11 +7,7 @@ class UserInfo {
   getUserInfo () {
     const name = this._userNameElement.textContent;
     const role = this._userRoleElement.textContent;
-    const userInfoObject = {
-      name: name,
-      role: role,
-    };
-    return userInfoObject;
+    return {name, role};
   }
 
   setUserInfo ({name, role}) {

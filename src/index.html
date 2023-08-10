@@ -22,12 +22,12 @@
         <div class="profile__info">
           <div class="profile__info-top">
             <h1 class="profile__name">Жак-Ив Кустов</h1>
-            <button type="button" class="profile__edit"></button>
+            <button aria-label="Edit profile" type="button" class="profile__edit"></button>
           </div>
           <p class="profile__role">Исследователь океанов</p>
         </div>
       </div>
-      <button type="button" class="profile__add-button"></button>
+      <button aria-label="Add place" type="button" class="profile__add-button"></button>
     </section>
     <section class="elements">
       <template class="elements__template">
@@ -35,10 +35,10 @@
           <div class="elements__element-image-container">
             <img class="elements__element-image">
           </div>
-          <button type="button" class="elements__element-basket"></button>
+          <button aria-label="Remove place" type="button" class="elements__element-basket"></button>
           <div class="elements__element-bottom">
             <h2 class="elements__element-title"></h2>
-            <button type="button" class="elements__element-like"></button>
+            <button aria-label="Like place" type="button" class="elements__element-like"></button>
           </div>
         </div>
       </template>
@@ -51,7 +51,7 @@
 
   <div class="popup js-profile-popup">
     <div class="popup__container">
-      <button type="button" class="popup__close"></button>
+      <button aria-label="Close popup" type="button" class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form name="profile-form" class="popup__form" novalidate>
         <div class="popup__input-container">
@@ -68,7 +68,7 @@
   </div>
   <div class="popup js-place-popup">
     <div class="popup__container">
-      <button type="button" class="popup__close"></button>
+      <button aria-label="Close popup" type="button" class="popup__close"></button>
       <h2 class="popup__title">Новое место</h2>
       <form name="place-form" class="popup__form" novalidate>
         <div class="popup__input-container">
@@ -85,7 +85,7 @@
   </div>
   <div class="popup popup_dark image-popup js-image-popup">
     <div class="image-popup__container">
-      <button type="button" class="popup__close"></button>
+      <button aria-label="Close popup" type="button" class="popup__close"></button>
       <img class="image-popup__image">
       <p class="image-popup__title"></p>
     </div>

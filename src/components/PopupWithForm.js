@@ -5,21 +5,21 @@ class PopupWithForm extends Popup {
     super(slelctor);
     this._submitFormCallback = submitFormCallback;
     this._form = this._element.querySelector('form');
+    this._formElements = this._form.querySelectorAll('input');
   }
 
   _getInputValues () {
-    const formElements = this._form.querySelectorAll('input');
     const formData = {};
-    formElements.forEach(function(element) {
+    this._formElements.forEach(function(element) {
         formData[element.name] = element.value;
     })
     return formData;
   }
 
   setEventListeners () {
-    
     this._element.addEventListener('submit', (evt) => {
-      this._submitFormCallback(evt, this._getInputValues ())
+      evt.preventDefault();
+      this._submitFormCallback(this._getInputValues ())
     });
     super.setEventListeners ();
   }

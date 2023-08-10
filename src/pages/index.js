@@ -3,6 +3,8 @@ import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { Card } from '../components/Card.js';
+import { initialCards, validationConfig } from '../utils/constants.js';
 
 // edit profile
 
@@ -30,9 +32,7 @@ function showProfilePopup() {
 
 profileEditButton.addEventListener('click', showProfilePopup);
 
-function handleProfileForm (evt, inputValues) {
-  evt.preventDefault();
-
+function handleProfileForm (inputValues) {
   const editedName = inputValues.name;
   const editedRole = inputValues.role;
 
@@ -40,42 +40,10 @@ function handleProfileForm (evt, inputValues) {
   profilePopup.close();
 }
 
-
-// render places
-
-import { Card } from '../components/Card.js';
-
-const initialCards = [
-  {
-    name: 'Карачаевск',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  }
-];
-
 // showCards();
 
 const elementsTemplate = document.querySelector('.elements__template').content;
-const elementsContainer = document.querySelector('.elements');
+const elementsContainerSelector = '.elements';
 
 function renderCard(item) {
   function createCard(item) {
@@ -92,7 +60,7 @@ const cardsList = new Section(
     items: initialCards,
     renderer: (item) => renderCard(item),
   },
-  elementsContainer
+  elementsContainerSelector
 );
 
 cardsList.renderItems();
@@ -109,28 +77,17 @@ placePopup.setEventListeners();
 placeAddButton.addEventListener('click', () => 
 placePopup.open());
 
-function handlePlaceForm (evt, inputValues) {
-  evt.preventDefault(evt);
-
+function handlePlaceForm (inputValues) {
   const placeName = inputValues.place;
   const placeLink = inputValues.link;
 
   const newPlace = [{name:placeName, link:placeLink}];
 
-  const newCard = new Section(
-    {
-      items: newPlace,
-      renderer: (item) => renderCard(item),
-    },
-    elementsContainer
-  );
-
-  placePopup._getInputValues ();
+  cardsList.items = newPlace;
   
-  newCard.renderItems();
+  cardsList.renderItems();
   placePopup.close();
 }
-
 
 // show image
 
@@ -143,7 +100,6 @@ imagePopup.setEventListeners();
 function showImage(name, link) {
   imagePopup.open(name, link);
 }
-
 
 // forms validaton
 
@@ -158,11 +114,4 @@ const enableAllFormsValidation = (options) => {
   })
 };
 
-enableAllFormsValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active',
-});
+enableAllFormsValidation(validationConfig);

@@ -30,6 +30,10 @@ class Card {
   _removeCard() {
     this._cardElement.remove();
     this._cardElement = null;
+    this._elementImage = null;
+    this._elementTitle = null;
+    this._elementLikeButton = null;
+    this._elementBasketButton = null;
   }
 }
 

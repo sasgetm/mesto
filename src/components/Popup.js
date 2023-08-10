@@ -1,17 +1,17 @@
 class Popup {
   constructor (selector) {
-    this._selector = selector;
-    this._element = document.querySelector(this._selector);
+    this._element = document.querySelector(selector);
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   open () {
     this._element.classList.add('popup_opened');
-    document.addEventListener('keyup', this._handleEscClose.bind(this));
+    document.addEventListener('keyup', this._handleEscClose);
   }
 
   close () {
     this._element.classList.remove('popup_opened');
-    document.removeEventListener('keyup', this._handleEscClose.bind(this));
+    document.removeEventListener('keyup', this._handleEscClose);
   }
 
   _handleEscClose(evt) {

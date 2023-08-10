@@ -56,7 +56,7 @@ class FormValidator {
         this._toggleButtonState();
       });
     });
-    this._formElement.addEventListener('submit', () => this._toggleButtonState());
+    this._formElement.addEventListener('reset', () => setTimeout(() => this._toggleButtonState(), 0));
   };
 }
 
