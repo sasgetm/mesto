@@ -11,6 +11,8 @@
 	cursor: pointer;
 	border: 0;
 	background-color: transparent;
+	opacity: 0;
+	visibility: hidden;
 }
 .elements__element-basket:hover {
 	opacity: .7;

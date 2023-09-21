@@ -16,15 +16,15 @@
   <main class="content">
     <section class="profile">
       <div class="profile__data">
-        <div class="profile__avatar">
-          <img class="profile__avatar-image" src="<%=require('./images/cousteau.png')%>" alt="Жак-Ив Кусто">
+        <div class="profile__avatar js-profile-avatar">
+          <img class="profile__avatar-image">
         </div>
         <div class="profile__info">
           <div class="profile__info-top">
-            <h1 class="profile__name">Жак-Ив Кустов</h1>
+            <h1 class="profile__name"></h1>
             <button aria-label="Edit profile" type="button" class="profile__edit"></button>
           </div>
-          <p class="profile__role">Исследователь океанов</p>
+          <p class="profile__role"></p>
         </div>
       </div>
       <button aria-label="Add place" type="button" class="profile__add-button"></button>
@@ -38,7 +38,10 @@
           <button aria-label="Remove place" type="button" class="elements__element-basket"></button>
           <div class="elements__element-bottom">
             <h2 class="elements__element-title"></h2>
-            <button aria-label="Like place" type="button" class="elements__element-like"></button>
+            <div class="elements__element-like-container">
+              <button aria-label="Like place" type="button" class="elements__element-like"></button>
+              <span class="elements__element-like-value"></span>
+            </div>
           </div>
         </div>
       </template>
@@ -46,7 +49,7 @@
   </main>
 
   <footer class="footer">
-    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+    <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
   </footer>
 
   <div class="popup js-profile-popup">
@@ -88,6 +91,26 @@
       <button aria-label="Close popup" type="button" class="popup__close"></button>
       <img class="image-popup__image">
       <p class="image-popup__title"></p>
+    </div>
+  </div>
+  <div class="popup js-delete-popup">
+    <div class="popup__container">
+      <button aria-label="Close popup" type="button" class="popup__close"></button>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <button class="popup__button js-delete-button" data-card="">Да</button>
+    </div>
+  </div>
+  <div class="popup js-avatar-popup">
+    <div class="popup__container">
+      <button aria-label="Close popup" type="button" class="popup__close"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form name="place-form" class="popup__form" novalidate>
+        <div class="popup__input-container">
+          <input type="url" class="popup__input popup__input_avatar_link" id="avatar-url-input" name="avatar" placeholder="Ссылка на картинку" required>
+          <span class="popup__input-error avatar-url-input-error"></span>
+        </div>
+        <button type="submit" class="popup__button">Сохранить</button>
+      </form>
     </div>
   </div>
 </body>

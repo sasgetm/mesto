@@ -5,14 +5,18 @@ class Section {
     this._containerElement = document.querySelector(containerSelector);
   }
 
-  renderItems () {
+  renderItems (method) {
     this.items.forEach(item => {
-      this._renderer(item);
+      this._renderer(item, method);
     });
   }
 
-  addItem (element) {
-    this._containerElement.prepend(element);
+  addItem (element, method) {
+    if(method == 'prepend') {
+      this._containerElement.prepend(element);
+    } else {
+      this._containerElement.append(element);
+    }
   }
 }
 

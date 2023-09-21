@@ -21,9 +21,12 @@
 @import url(../blocks/elements/__element-image-container/elements__element-image-container.css);
 @import url(../blocks/elements/__element-image/elements__element-image.css);
 @import url(../blocks/elements/__element-basket/elements__element-basket.css);
+@import url(../blocks/elements/__element-basket/_active/elements__element-basket_active.css);
 @import url(../blocks/elements/__element-bottom/elements__element-bottom.css);
 @import url(../blocks/elements/__element-title/elements__element-title.css);
+@import url(../blocks/elements/__element-like-container/elements__element-like-container.css);
 @import url(../blocks/elements/__element-like/elements__element-like.css);
+@import url(../blocks/elements/__element-like-value/elements__element-like-value.css);
 @import url(../blocks/elements/__element-like/_active/elements__element-like_active.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
