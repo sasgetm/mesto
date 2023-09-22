@@ -21,7 +21,7 @@ class PopupWithConfirmation extends Popup {
     super.open();
   }
 
-  dataLoading (isLoading) {
+  switchLoader (isLoading) {
     if (isLoading) {
       this._confirmationButton.textContent = 'Сохранение...';
     } else {

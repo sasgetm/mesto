@@ -31,7 +31,7 @@ class PopupWithForm extends Popup {
     super.close();
   }
 
-  dataLoading (isLoading) {
+  switchLoader (isLoading) {
     if (isLoading) {
       this._submitButton.textContent = 'Сохранение...';
     } else {
